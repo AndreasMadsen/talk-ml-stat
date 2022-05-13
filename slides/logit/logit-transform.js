@@ -72,8 +72,12 @@
     const normalContainer = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     const transformContainer = svg.append("g")
+        .attr("class", "fragment")
+        .attr("data-fragment-index", "0")
         .attr("transform", "translate(" + margin.left + "," + (height + margin.bottom + 2 * margin.top) + ")");
     const studenttContainer = svg.append("g")
+        .attr("class", "fragment")
+        .attr("data-fragment-index", "1")
         .attr("transform", "translate(" + margin.left + "," + (2*height + 2*margin.bottom + 3 * margin.top) + ")");
 
     const normal = new Plot(normalContainer, {

@@ -2,11 +2,13 @@ const d3 = require('d3/dist/d3.js');
 
 class Plot {
     constructor(container, {bins, width, height, xdomain, ydomain, ylabel, yticks}={}) {
-      if (!bins) bins = 200;
-
+      this.bins = bins || 200;
       this.container = container;
       this.height = height;
       this.width = width;
+      this.xdomain = xdomain;
+      this.bin_width_px = this.width / this.bins;
+      this.bin_width_scale = (xdomain[1] - xdomain[0]) / this.bins;
 
       this.x = d3.scaleLinear()
         .range([0, width])
@@ -40,19 +42,14 @@ class Plot {
 
       this.dist = this.container.append("g")
         .attr("class", "distributions");
-
-      this.bins = [];
-      for (var i = 0; i <= bins; i++) {
-        this.bins.push(this.x.invert(i * (width / bins)));
-      }
     }
 
-    binIndex (obs) {
-      // who said binary search
-      for (var i = 0; i < this.bins.length; i++) {
-        if (obs <= this.bins[i + 1]) return i;
+    binIndex(x) {
+      const idx = Math.floor((x - this.xdomain[0]) / this.bin_width_scale);
+      if (idx < 0 || idx >= this.bins) {
+        return null
       }
-      return null;
+      return idx;
     }
 
     clearObservations() {
@@ -66,8 +63,8 @@ class Plot {
 
       this.obs.append('rect')
         .attr("class", "bin" + (classname ? ' ' + classname : ''))
-        .attr("x", this.binIndex(obs) * this.width / this.bins.length)
-        .attr("width", this.width / this.bins.length)
+        .attr("x", index * this.bin_width_px)
+        .attr("width", this.bin_width_px)
         .attr("height", this.height);
     }
 

@@ -9,7 +9,8 @@ const modules = {
   './student_t_custom': require('./student_t_custom.js'),
   './beta': require('./beta.js'),
   './manage_state': require('./manage_state.js'),
-  './plot': require('./plot.js')
+  './plot': require('./plot.js'),
+  './emperical_distribution':  require('./emperical_distribution.js')
 };
 
 window.require = function (name) {
