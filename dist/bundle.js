@@ -2024,6 +2024,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 const modules = {
   'd3': require('d3/dist/d3.js'),
+  'cephes': require('cephes'),
   'distributions': require('distributions'),
   'jstat': require('jstat'),
   'summary': require('summary'),
@@ -2041,7 +2042,7 @@ window.require = function (name) {
   throw new Error('module ' + name + ' not bundled');
 };
 
-},{"./manage_state.js":6,"./plot.js":24,"./student_t_custom.js":25,"d3/dist/d3.js":11,"distributions":12,"jstat":17,"summary":18,"ttest":19}],6:[function(require,module,exports){
+},{"./manage_state.js":6,"./plot.js":24,"./student_t_custom.js":25,"cephes":10,"d3/dist/d3.js":11,"distributions":12,"jstat":17,"summary":18,"ttest":19}],6:[function(require,module,exports){
 function manageState(state, section, wrapper_id) {
     function getFragmentIndex() {
         const activeFragments = section

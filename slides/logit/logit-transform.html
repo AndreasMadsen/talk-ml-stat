@@ -1,0 +1,69 @@
+<style scoped>
+:scope div.content {
+  overflow: hidden;
+}
+
+:scope #logit-d3-transform {
+  float: left;
+}
+
+:scope .equations {
+  float: left;
+  font-size: 80%;
+  text-align: left;
+}
+
+:scope div.seperator {
+  margin-top: 100px;
+}
+
+:scope .equations math-latex {
+  display: block;
+  margin: 20px 0;
+}
+
+:scope svg path.line {
+    fill: none;
+    stroke: #cb4b16;
+    stroke-width: 2px;
+}
+:scope svg rect.bin {
+    stroke-width: 0;
+    fill: #839496;
+    opacity: 0.3;
+}
+
+:scope svg path.area {
+  fill: #839496;
+  opacity: 0.4;
+}
+
+:scope svg text.area {
+  text-anchor: middle;
+  font-size: 60%;
+  font-family: sans-serif;
+  fill: #839496;
+}
+
+:scope svg text.description {
+  text-anchor: middle;
+  font-size: 12pt;
+  font-family: sans-serif;
+  fill: #839496;
+}
+
+:scope svg rect.bar {
+  fill: #839496;
+}
+
+</style>
+
+<div class="content">
+    <article id="logit-d3-transform"></article>
+    <article class="equations">
+      <math-latex latex="acc"></math-latex>
+      <div class="seperator"></div>
+      <math-latex latex="\hat{x} = \ln\left(\frac{acc}{1 - acc}\right)"></math-latex>
+      <div class="seperator"></div>
+      <math-latex latex="\mu = \frac{\exp(\hat{\mu})}{1 + \exp(\hat{\mu})}"></math-latex>
+</div>

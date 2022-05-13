@@ -1,0 +1,20 @@
+<pre><code class="language-python" data-trim data-noescape>
+import numpy as np
+import scipy.special
+import scipy.stats
+
+def logit_transform_ci(x):
+    logits = scipy.special.logit(x)
+
+    mean = np.mean(logits)
+    sem = scipy.stats.sem(logits)
+    lower, upper = scipy.stats.t.interval(
+        alpha=0.95, df=len(x) - 1, loc=mean, scale=sem
+    )
+
+    lower = scipy.special.expit(lower)
+    mean = scipy.special.expit(mean)
+    upper = scipy.special.expit(upper)
+
+    return (mean, lower, upper)
+</code></pre>

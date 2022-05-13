@@ -1,6 +1,7 @@
 
 const modules = {
   'd3': require('d3/dist/d3.js'),
+  'cephes': require('cephes'),
   'distributions': require('distributions'),
   'jstat': require('jstat'),
   'summary': require('summary'),

@@ -75,9 +75,7 @@
 
   class Frame {
     constructor(container) {
-      const d3 = window.require('d3');
-
-      this.svg = d3.select("#clt-d3-visualization").append("svg")
+      this.svg = container.append("svg")
         .attr("class", "d3")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + 2 * margin.top + 2 * margin.bottom);
