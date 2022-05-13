@@ -1,0 +1,85 @@
+<style scoped>
+:scope table {
+    font-size: 0.5em;
+}
+</style>
+
+<pre><code class="language-python" data-trim data-noescape>
+    import pandas as pd
+    df = pd.read_csv('./data.csv');
+</code></pre>
+
+<table>
+    <thead>
+      <tr>
+        <th >Seed</th>
+        <th >Dataset</th>
+        <th >Model</th>
+        <th >Performance</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th rowspan="6">0</th>
+        <th rowspan="2">IMDB</th>
+        <th >BiLSTM-Attention</th>
+        <td >0.909657</td>
+      </tr>
+      <tr>
+        <th >RoBERTa</th>
+        <td >0.950020</td>
+      </tr>
+      <tr>
+        <th rowspan="2">SNLI</th>
+        <th >BiLSTM-Attention</th>
+        <td >0.782777</td>
+      </tr>
+      <tr>
+        <th >RoBERTa</th>
+        <td >0.914088</td>
+      </tr>
+      <tr>
+        <th rowspan="2">SST</th>
+        <th >BiLSTM-Attention</th>
+        <td >0.822993</td>
+      </tr>
+      <tr>
+        <th >RoBERTa</th>
+        <td >0.947601</td>
+      </tr>
+      <tr>
+        <th rowspan="6">1</th>
+        <th rowspan="2">IMDB</th>
+        <th >BiLSTM-Attention</th>
+        <td >0.903962</td>
+      </tr>
+      <tr>
+        <th >RoBERTa</th>
+        <td >0.950939</td>
+      </tr>
+      <tr>
+        <th rowspan="2">SNLI</th>
+        <th >BiLSTM-Attention</th>
+        <td >0.781759</td>
+      </tr>
+      <tr>
+        <th >RoBERTa</th>
+        <td >0.916531</td>
+      </tr>
+      <tr>
+        <th rowspan="2">SST</th>
+        <th >BiLSTM-Attention</th>
+        <td >0.827047</td>
+      </tr>
+      <tr>
+        <th >RoBERTa</th>
+        <td >0.939706</td>
+      </tr>
+      <tr>
+        <th rowspan="6">2</th>
+        <th rowspan="2">IMDB</th>
+        <th >BiLSTM-Attention</th>
+        <td >0.906875</td>
+      </tr>
+    </tbody>
+  </table>

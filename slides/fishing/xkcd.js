@@ -1,38 +1,22 @@
 (function () {
-  const section = document.currentScript.parentNode;
+  const manageState = window.require('./manage_state');
 
-  function getFragmentIndex() {
-    const activeFragments = section
-      .querySelectorAll('.fragment.current-visible.visible');
-    if (activeFragments.length > 0) {
-      const latest = activeFragments[activeFragments.length - 1];
-      return (+latest.dataset.fragmentIndex) + 1;
+  class State {
+    constructor() {
+      this.img = document.getElementById('fishing-xkcd-img');
     }
-    return 0;
+
+    pause() {}
+
+    set(stateIndex) {
+      this.img.classList.remove('position0');
+      this.img.classList.remove('position1');
+      this.img.classList.remove('position2');
+      this.img.classList.remove('position3');
+      this.img.classList.add('position' + stateIndex);
+    }
   }
 
-  Reveal.addEventListener('fragmentshown', function(event) {
-    if (event.fragment.parentNode.id !== 'fishing-xkcd-logic') return;
-    setPosition(getFragmentIndex());
-  });
-
-  Reveal.addEventListener('fragmenthidden', function(event) {
-    if (event.fragment.parentNode.id !== 'fishing-xkcd-logic') return;
-    setPosition(getFragmentIndex());
-  });
-
-  Reveal.addEventListener('slidechanged', function(event) {
-    if (event.currentSlide === section) {
-      setPosition(getFragmentIndex());
-    }
-  });
-
-  const img = document.getElementById('fishing-xkcd-img');
-  function setPosition(stateIndex) {
-    img.classList.remove('position0');
-    img.classList.remove('position1');
-    img.classList.remove('position2');
-    img.classList.remove('position3');
-    img.classList.add('position' + stateIndex);
-  }
+  const state = new State();
+  manageState(state, document.currentScript.parentNode, 'fishing-xkcd-logic');
 })();
