@@ -4,6 +4,7 @@
   const summary = window.require('summary');
   const ttest = window.require('ttest');
   const d3 = window.require('d3');
+  const Plot = window.require('./plot');
 
   var state = null;
 
@@ -54,8 +55,18 @@
       const meanContainer = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + (height + margin.bottom + 2 * margin.top) + ")");
 
-      this.obs = new Plot(observationsContainer, xdomain, ydomain);
-      this.mean = new Plot(meanContainer, xdomain, ydomain);
+      this.obs = new Plot(observationsContainer, {
+        width: width,
+        height: height,
+        xdomain: xdomain,
+        ydomain: ydomain
+      });
+      this.mean = new Plot(meanContainer, {
+        width: width,
+        height: height,
+        xdomain: xdomain,
+        ydomain: ydomain
+      });
 
       this.animatorTimer = null;
       this.observationsDrawn = 0;
@@ -65,17 +76,13 @@
       clearInterval(this.animatorTimer);
     };
 
-    resume() {
-      this.set(getFragmentIndex());
-    };
-
     observations(count) {
       this.observationsDrawn = count;
 
       this.obs.clearObservations()
       for (let i = 0; i < count; i++) {
-        this.obs.drawObservation(obsA[i], 'sourceA');
-        this.obs.drawObservation(obsB[i], 'sourceB');
+        this.obs.drawObservation(obsA[i], {classname: 'sourceA'});
+        this.obs.drawObservation(obsB[i], {classname: 'sourceB'});
       }
 
       const statA = summary(obsA.slice(0, count));
@@ -83,15 +90,16 @@
 
       this.mean.clearObservations();
       this.mean.clearDistributions();
-      this.mean.drawObservation(statA.mean(), 'sourceA');
-      this.mean.drawObservation(statB.mean(), 'sourceB');
+      this.mean.drawObservation(statA.mean(), {classname: 'sourceA'});
+      this.mean.drawObservation(statB.mean(), {classname: 'sourceB'});
 
       this.mean.drawDistribution(
         new StudenttCustom(statA.size() - 1, statA.mean(), statA.sd() / Math.sqrt(statA.size())),
-        'sourceA');
+        {classname: 'sourceA', showArea: true}
+      );
       this.mean.drawDistribution(
         new StudenttCustom(statB.size() - 1, statB.mean(), statB.sd() / Math.sqrt(statB.size())),
-        'sourceB'
+        {classname: 'sourceB', showArea: true}
       );
 
       const t = ttest(statA, statB);
@@ -123,110 +131,6 @@
       } else if (stateIndex === 2) {
         this.animatorTimer = setInterval(this.animator.bind(this, 9), 20);
       }
-    }
-  }
-
-  class Plot {
-    constructor(container, xdomain, ydomain) {
-      this.container = container;
-
-      this.x = d3.scaleLinear()
-        .range([0, width])
-        .domain(xdomain);
-
-      this.y = d3.scaleLinear()
-        .range([height, 0])
-        .domain(ydomain);
-
-      this.container.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(this.x));
-
-      this.container.append("g")
-        .attr("class", "axis")
-        .call(d3.axisLeft(this.y).tickValues([]));
-
-      this.obs = this.container.append("g")
-        .attr("class", "observations");
-
-      this.dist = this.container.append("g")
-        .attr("class", "distributions");
-
-      this.bins = [];
-      for (var i = 0; i <= bins; i++) {
-        this.bins.push(this.x.invert(i * (width / bins)));
-      }
-    }
-
-    binIndex(obs) {
-      // who said binary search
-      for (var i = 0; i < this.bins.length; i++) {
-        if (obs <= this.bins[i + 1]) return i;
-      }
-      return null;
-    };
-
-    clearObservations() {
-      this.obs.selectAll('rect')
-        .remove();
-    };
-
-    drawObservation(obs, classname) {
-      const index = this.binIndex(obs);
-      if (index === null) return; // out of axis domain
-
-      this.obs.append('rect')
-        .attr("class", "bin" + (classname ? ' ' + classname : ''))
-        .attr("x", this.binIndex(obs) * width / bins)
-        .attr("width", width / bins)
-        .attr("height", height);
-    };
-
-    clearDistributions() {
-      this.dist.selectAll('path')
-        .remove();
-    };
-
-    _pdf(distribution, start, end) {
-      const xstart = this.x(
-        Math.max(this.x.domain()[0], distribution.inv(start))
-      );
-      const xend = this.x(
-        Math.min(this.x.domain()[1], distribution.inv(end))
-      );
-
-      const curve = [];
-      for (var xpx = xstart; xpx <= xend; xpx++) {
-        var x = this.x.invert(xpx);
-        curve.push({
-          x: x,
-          y: distribution.pdf(x)
-        });
-      }
-
-      return curve;
-    };
-
-    drawDistribution(distribution, classname) {
-      const self = this;
-
-      const area = d3.area()
-          .x(function(d) { return self.x(d.x); })
-          .y0(height)
-          .y1(function(d) { return self.y(d.y); });
-
-      const line = d3.line()
-          .x(function(d) { return self.x(d.x); })
-          .y(function(d) { return self.y(d.y); });
-
-      this.dist.append("path")
-        .attr("class", "area" + (classname ? ' ' + classname : ''))
-        .attr("d", area(this._pdf(distribution, 0.025, 0.975)));
-
-      this.dist.append("path")
-        .attr("class", "line" + (classname ? ' ' + classname : ''))
-        .attr("d", line(this._pdf(distribution, 0, 1)));
     }
   }
 

@@ -23,7 +23,7 @@ function manageState(state, section, wrapper_id) {
         if (event.previousSlide === section) {
             state.pause();
         } else if (event.currentSlide === section) {
-            state.resume();
+            state.set(getFragmentIndex());
         }
     });
 

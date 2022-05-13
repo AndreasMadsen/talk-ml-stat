@@ -2,6 +2,7 @@
   const d3 = window.require('d3');
   const summary = window.require('summary');
   const StudenttCustom = window.require('./student_t_custom');
+  const Plot = window.require('./plot');
 
   const margin = {top: 20, right: 30, bottom: 30, left: 30};
   const width = 480 - margin.left - margin.right;
@@ -31,116 +32,6 @@
     0.896953383138608, 0.71231381750424, 0.905134001649141, 0.908675256490446, 0.76528126263085
   ];
 
-  class Plot{
-    constructor(container, normal) {
-      this.container = container;
-      this.normal = normal;
-
-      this.x = d3.scaleLinear()
-        .range([0, width])
-        .domain([
-          Math.max(0, normal.mean() - 3 * Math.sqrt(normal.variance())),
-          normal.mean() + 3 * Math.sqrt(normal.variance())
-        ]);
-
-      this.y = d3.scaleLinear()
-        .range([height, 0])
-        .domain([
-          0,
-          normal.pdf(normal.mean())
-        ]);
-
-      this.container.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(this.x));
-
-      this.container.append("g")
-        .attr("class", "axis")
-        .call(d3.axisLeft(this.y));
-    }
-
-    bar(x, name, fragment) {
-      const rect = this.container.append('rect')
-        .attr('x', this.x(x))
-        .attr('class', 'bar')
-        .attr('width', 1)
-        .attr('height', this.y(0));
-
-      const text = this.container.append('text')
-        .attr('x', this.x(x))
-        .attr('y', -5)
-        .attr('class', 'description')
-        .text(name);
-
-      if (fragment !== undefined) {
-        rect
-          .attr("data-fragment-index", fragment)
-          .classed("fragment", true);
-        text
-          .attr("data-fragment-index", fragment)
-          .classed("fragment", true);
-      }
-    };
-
-    _pdf(start, end) {
-      const xstart = this.x(
-        Math.max(this.x.domain()[0], this.normal.inv(start))
-      );
-      const xend = this.x(
-        Math.min(this.x.domain()[1], this.normal.inv(end))
-      );
-
-      const curve = [];
-      for (var xpx = xstart; xpx <= xend; xpx++) {
-        var x = this.x.invert(xpx);
-        curve.push({
-          x: x,
-          y: this.normal.pdf(x)
-        });
-      }
-
-      return curve;
-    };
-
-    area(start, end) {
-      const self = this;
-      const data = this._pdf(start, end);
-
-      const area = d3.area()
-          .x(function(d) { return self.x(d.x); })
-          .y0(height)
-          .y1(function(d) { return self.y(d.y); });
-
-      this.container.append("path")
-        .attr("class", "area")
-        .attr("d", area(data));
-
-      const xstart = this.x(data[0].x);
-      const xend = this.x(data[data.length - 1].x);
-      const xmid = (xstart + xend) / 2;
-
-      this.container.append("text")
-        .attr("class", "area")
-        .attr("x", xmid)
-        .attr("y", this.y(5))
-        .text(((end - start) * 100).toFixed(0) + ' %');
-    };
-
-    line(start, end) {
-      const self = this;
-      const data = this._pdf(start, end);
-
-      const line = d3.line()
-          .x(function(d) { return self.x(d.x); })
-          .y(function(d) { return self.y(d.y); });
-
-      this.container.append("path")
-        .attr("class", "line")
-        .attr("d", line(data));
-    }
-  }
-
   const stat = summary(observations.slice(0, 30));
   const normal = new StudenttCustom(stat.size(), stat.mean(), stat.sd() / Math.sqrt(stat.size()));
 
@@ -152,10 +43,17 @@
   const container = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  const plot = new Plot(container, normal);
+  const plot = new Plot(container, {
+    width: width,
+    height: height,
+    xdomain: [
+      Math.max(0, normal.mean() - 3 * Math.sqrt(normal.variance())),
+      normal.mean() + 3 * Math.sqrt(normal.variance())
+    ],
+    ydomain: [0, normal.pdf(normal.mean())]
+  });
 
-  plot.area(0.025, 0.975);
-  plot.line(0, 1);
-  plot.bar(0.72, 'Baseline', 0);
-  plot.bar(stat.mean(), 'Estimated');
+  plot.annotationLine(0.72, 'Baseline', {fragment: 0});
+  plot.annotationLine(stat.mean(), 'Estimated');
+  plot.drawDistribution(normal, {showArea: true, annotate: '95%'});
 })();

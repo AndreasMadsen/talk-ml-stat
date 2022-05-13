@@ -3,13 +3,13 @@
   const StudenttCustom = window.require('./student_t_custom');
   const manageState = window.require('./manage_state');
   const d3 = window.require('d3');
+  const Plot = window.require('./plot');
 
   var state = null;
 
   const margin = {top: 10, right: 30, bottom: 30, left: 30};
   const width = 600 - margin.left - margin.right;
   const height = 220 - margin.top - margin.bottom;
-  const bins = 200;
 
   // Sampled from `rbeta(100, 8, 2)`
   const observations = [
@@ -55,17 +55,23 @@
       const studenttContainer = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + (height + margin.bottom + 2 * margin.top) + ")");
 
-      this.normal = new Plot(normalContainer, xdomain, ydomain);
-      this.studentt = new Plot(studenttContainer, xdomain, ydomain);
+      this.normal = new Plot(normalContainer, {
+        width: width,
+        height: height,
+        xdomain: xdomain,
+        ydomain: ydomain
+      });
+      this.studentt = new Plot(studenttContainer, {
+        width: width,
+        height: height,
+        xdomain: xdomain,
+        ydomain: ydomain
+      });
     }
 
     pause() {
       clearInterval(this.animatorTimer);
-    };
-
-    resume() {
-      this.set(getFragmentIndex());
-    };
+    }
 
     drawObservations(count) {
       const summary = window.require('summary');
@@ -79,7 +85,7 @@
       }
 
       return summary(obs);
-    };
+    }
 
     animator() {
       if (this.observationsDrawn === observations.length) {
@@ -92,9 +98,9 @@
       this.studentt.clearDistributions();
       this.studentt.clearObservations();
       this.studentt.drawObservation(stat.mean());
-      this.studentt.drawDistribution(distributions.Normal(stat.mean(), se));
+      this.studentt.drawDistribution(distributions.Normal(stat.mean(), se)), {classname: 'opacity', showArea: true};
       this.studentt.drawDistribution(new StudenttCustom(stat.size() - 1, stat.mean(), se));
-    };
+    }
 
     set(stateIndex) {
       clearInterval(this.animatorTimer);
@@ -123,95 +129,11 @@
         this.studentt.clearDistributions();
         this.studentt.clearObservations();
         this.studentt.drawObservation(stat.mean());
-        this.studentt.drawDistribution(distributions.Normal(stat.mean(), se), true);
+        this.studentt.drawDistribution(distributions.Normal(stat.mean(), se), {classname: 'opacity'});
         this.studentt.drawDistribution(new StudenttCustom(stat.size() - 1, stat.mean(), se));
       } else if (stateIndex === 3) {
         this.animatorTimer = setInterval(this.animator.bind(this), 50);
       }
-    }
-  }
-
-  class Plot {
-    constructor(container, xdomain, ydomain) {
-      this.container = container;
-
-      this.x = d3.scaleLinear()
-        .range([0, width])
-        .domain(xdomain);
-
-      this.y = d3.scaleLinear()
-        .range([height, 0])
-        .domain(ydomain);
-
-      this.container.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(this.x));
-
-      this.container.append("g")
-        .attr("class", "axis")
-        .call(d3.axisLeft(this.y));
-
-      this.obs = this.container.append("g")
-        .attr("class", "observations");
-
-      this.dist = this.container.append("g")
-        .attr("class", "distributions");
-
-      this.bins = [];
-      for (var i = 0; i <= bins; i++) {
-        this.bins.push(this.x.invert(i * (width / bins)));
-      }
-    }
-
-    binIndex(obs) {
-      // who said binary search
-      for (var i = 0; i < this.bins.length; i++) {
-        if (obs <= this.bins[i + 1]) return i;
-      }
-      return null;
-    }
-
-    clearObservations() {
-      this.obs.selectAll('rect')
-        .remove();
-    }
-
-    drawObservation(obs) {
-      const index = this.binIndex(obs);
-      if (index === null) return; // out of axis domain
-
-      this.obs.append('rect')
-        .attr("class", "bin")
-        .attr("x", this.binIndex(obs) * width / bins)
-        .attr("width", width / bins)
-        .attr("height", height);
-    }
-
-    clearDistributions() {
-      this.dist.selectAll('path')
-        .remove();
-    }
-
-    drawDistribution(distribution, opacity) {
-      const self = this;
-
-      const curve = [];
-      for (var xpx = 0; xpx <= width; xpx++) {
-        var x = this.x.invert(xpx);
-        curve.push({
-          x: x,
-          y: distribution.pdf(x)
-        });
-      }
-
-      const line = d3.line()
-          .x(function(d) { return self.x(d.x); })
-          .y(function(d) { return self.y(d.y); });
-
-      this.dist.append("path")
-        .attr("class", "line" + (opacity ? ' opacity' : ''))
-        .attr("d", line(curve));
     }
   }
 
