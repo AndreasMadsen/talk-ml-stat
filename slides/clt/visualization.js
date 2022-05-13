@@ -1,9 +1,9 @@
 (function () {
   const d3 = window.require('d3');
-  const jStat = window.require('jstat');
   const distributions = window.require('distributions');
   const manageState = window.require('./manage_state');
   const Plot = window.require('./plot');
+  const Beta = window.require('./beta');
 
   var frame = null;
   var state = null;
@@ -110,30 +110,7 @@
     }
   }
 
-  class BetaSampler {
-    constructor(alpha, beta) {
-      this.alpha = alpha;
-      this.beta = beta;
-    }
-
-    sample() {
-      return jStat.beta.sample( this.alpha, this.beta );
-    }
-
-    mean() {
-      return this.alpha / (this.alpha + this.beta);
-    }
-
-    variance() {
-      return (this.alpha * this.beta) / (Math.pow(this.alpha + this.beta, 2) * (this.alpha + this.beta + 1));
-    }
-
-    domain() {
-      return [0, 1];
-    }
-  }
-
-  sampler = new BetaSampler(8, 2);
+  sampler = new Beta(8, 2);
   frame = new Frame(d3.select("#clt-d3-visualization"));
   state = new State(frame);
   manageState(state, document.currentScript.parentNode, 'clt-visualization-logic');

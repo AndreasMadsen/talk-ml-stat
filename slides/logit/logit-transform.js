@@ -1,6 +1,6 @@
 (function () {
     const distributions = window.require('distributions');
-    const cephes = window.require('cephes');
+    const Beta = window.require('./beta');
     const StudenttCustom = window.require('./student_t_custom');
     const summary = window.require('summary');
     const d3 = window.require('d3');
@@ -26,32 +26,6 @@
     const logitObservations = observations.map((x) => logit(x));
     const stat = summary(observations);
     const logitStat = summary(logitObservations);
-
-    class Beta {
-        constructor(alpha, beta) {
-            this._alpha = alpha;
-            this._beta = beta;
-            this._sum = this._alpha + this._beta;
-        }
-        mean() {
-            return this._alpha / this._sum;
-        }
-        variance() {
-          return (this._alpha * this._beta) / (this._sum * this._sum * (this._sum + 1));
-        }
-        median() {
-            return this.inv(0.5);
-        }
-        inv(q) {
-          return cephes.incbi(this._alpha, this._beta, q);
-        }
-        pdf(x) {
-          return (Math.pow(x, this._alpha - 1) * Math.pow(1 - x, this._beta - 1)) / cephes.beta(this._alpha, this._beta);
-        }
-        cdf(x) {
-          return cephes.incbet(this._alpha, this._beta, x);
-        }
-    }
 
     function logit(p) {
         return Math.log(p / (1 - p));

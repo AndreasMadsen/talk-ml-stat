@@ -7,6 +7,7 @@ const modules = {
   'summary': require('summary'),
   'ttest': require('ttest'),
   './student_t_custom': require('./student_t_custom.js'),
+  './beta': require('./beta.js'),
   './manage_state': require('./manage_state.js'),
   './plot': require('./plot.js')
 };
