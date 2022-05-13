@@ -4,36 +4,112 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Statistical Reporting for Deep Learning Researchers</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css">
+		<link rel="stylesheet" href="dist/theme/moon.css" id="theme">
+		<link rel="stylesheet" href="css/custom.css">
 
 		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="plugin/highlight/solarized-dark.css">
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section id="font-page">
+					<h1>Statistical Reporting</h1>
+					<h2>for Deep Learning Researchers</h2>
+					<p style="font-weight: bold;">
+						<span style="text-decoration: line-through">Best practices</span><br>
+						Slighly above the minimum
+					</p>
+				</section>
+				<section>
+					<section data-background-image="slides/iceberg/iceberg.svg" data-background-color="black" data-background-size="contain">
+						<article style="height: 10em;"></article>
+					</section>
+				</section>
+				<section data-background-color="white">
+					<h1>What we do</h1>
+					<section data-background-color="white">
+						<img width="500" src="slides/what-we-do/current-avg.svg">
+					</section>
+					<section data-background-color="white">
+						<img width="500" src="slides/what-we-do/current-pm.svg">
+					</section>
+				</section>
+				<section data-background-color="white">
+					<h1>What we should do</h1>
+					<section data-background-color="white">
+						<img width="500" src="slides/what-we-should-do/table-ci.svg">
+					</section>
+					<section data-background-color="white">
+						<img width="900" src="slides/what-we-should-do/plot-errorbar.svg">
+					</section>
+					<section data-background-color="white">
+						<img width="700" src="slides/what-we-should-do/plot-ribbon.svg">
+					</section>
+				</section>
+				<section>
+					<h1>In Computer Science</h1>
+					<section data-import-from="slides/benchmark/benchmark-naive.html"></section>
+				</section>
+				<section>
+					<section data-import-from="slides/recognizing-randomness/poisson.html" data-script="slides/recognizing-randomness/poisson.js"></section>
+					<section data-background-color="#000000" data-import-from="slides/recognizing-randomness/pigeon-turn-peck.html"></section>
+					<section data-background-color="#000000" data-import-from="slides/recognizing-randomness/pigeon-clock-input.html"></section>
+				</section>
+				<section>
+					<h1>In Computer Science</h1>
+					<section data-import-from="slides/benchmark/benchmark-asm.html"></section>
+				</section>
+				<section>
+					<h1 style="margin-top: 1em; font-size: 5em;">Statistics</h1>
+				</section>
+				<section>
+					<h1>Central Limit Theorem</h1>
+					<section data-import-from="slides/clt/visualization.html" data-script="slides/clt/visualization.js"></section>
+					<section data-import-from="slides/clt/formalized.html"></section>
+					<section data-import-from="slides/clt/density.html" data-script="slides/clt/density.js"></section>
+					<section data-import-from="slides/clt/assumtions.html"></section>
+				</section>
+				<section>
+					<h1>Confidence Interval</h1>
+					<section data-import-from="slides/confidence-interval/studentt.html" data-script="slides/confidence-interval/studentt.js"></section>
+					<section data-import-from="slides/confidence-interval/calculation.html" data-script="slides/confidence-interval/calculation.js"></section>
+				</section>
+				<section>
+					<h1>Two Sample t-test</h1>
+					<section data-import-from="slides/welch/interval.html" data-script="slides/welch/interval.js"></section>
+					<section data-import-from="slides/welch/math-welch.html"></section>
+				</section>
+				<section>
+					<h1>Logit projection</h1>
+				</section>
+				<section>
+					<h1>Bootstrapping</h1>
+				</section>
+				<section>
+					<h1>Plots</h1>
+				</section>
 			</div>
 		</div>
 
 		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
+		<script src="dist/bundle.js"></script>
+		<script src="plugin/import/import.js"></script>
+		<script src="plugin/math-katex/math.js"></script>
+		<script src="plugin/control-hide/control-hide.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
+
 		<script>
-			// More info about initialization & config:
-			// - https://revealjs.com/initialization/
-			// - https://revealjs.com/config/
+			// More info https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize({
 				hash: true,
-
-				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+				history: true,
+				center: false,
+				plugins: [ RevealMath, RevealControlHide, RevealHighlight ]
 			});
 		</script>
 	</body>

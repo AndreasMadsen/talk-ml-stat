@@ -1,0 +1,75 @@
+<style scoped>
+:scope .graph {
+  float: left;
+  width: 480px;
+  height: 436px;
+}
+
+:scope .side {
+  float: right;
+  width: 480px;
+  height: 408px;
+}
+
+:scope pre {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+
+:scope svg path.line {
+  fill: none;
+  stroke: #cb4b16;
+  stroke-width: 2px;
+}
+
+:scope svg path.area {
+  fill: #839496;
+  opacity: 0.4;
+}
+
+:scope svg text.area {
+  text-anchor: middle;
+  font-size: 60%;
+  font-family: sans-serif;
+  fill: #839496;
+}
+
+:scope svg text.description {
+  text-anchor: middle;
+  font-size: 12pt;
+  font-family: sans-serif;
+  fill: #839496;
+}
+
+:scope svg rect.bar {
+  fill: #839496;
+}
+
+:scope .fragment.display {
+  display: none;
+}
+:scope .fragment.display.current-visible.visible.current-fragment {
+  display: block;
+}
+
+:scope dl {
+  font-size: 0.9em;
+}
+</style>
+
+<article class="graph" id="ci-d3-calculation"></article>
+<article class="side">
+<dl class="fragment current-visible display" data-fragment-index="0">
+<dt>Inside Interval</dt><dd>It <u>can't be rejected</u> that the true performance and the baseline are <u>equal</u>.</dd>
+<dt>Outside Interval</dt><dd>The true performance and the baseline are <u>not equal</u>, with 95% confidence.</dd>
+</dl>
+<!--
+<div class="fragment current-visible display" data-fragment-index="2">
+  <math-latex display-mode latex="H_0: \mu = \text{goal}"></math-latex>
+  <p>
+  The null hypothesis (<math-latex latex="H_0"></math-latex>) can only be rejected, never confirmed.
+  </p>
+</div>
+-->
+</article>

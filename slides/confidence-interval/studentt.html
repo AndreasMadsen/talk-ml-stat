@@ -1,0 +1,71 @@
+<style scoped>
+:scope div.content {
+  overflow: hidden;
+}
+
+:scope div.seperator {
+  margin-top: 100px;
+}
+
+:scope #ci-d3-studentt {
+  float: left;
+}
+
+:scope .equations {
+  float: right;
+  font-size: 80%;
+  text-align: left;
+}
+
+:scope .equations math-latex {
+  display: block;
+  margin: 20px 0;
+}
+
+:scope svg path.line {
+  fill: none;
+  stroke: #cb4b16;
+  stroke-width: 2px;
+}
+:scope svg path.line.opacity {
+  opacity: 0.3;
+}
+
+:scope svg rect.bin {
+  stroke-width: 0;
+  fill: #839496;
+  opacity: 0.3;
+}
+
+:scope .fragment.opacity-parent .fragment.opacity {
+  visibility: visible;
+  opacity: 0;
+}
+
+:scope .fragment.opacity-parent.visible .fragment.opacity {
+  opacity: 1;
+}
+
+:scope .fragment.opacity-parent.visible .fragment.opacity.visible {
+  opacity: 0.3;
+}
+</style>
+
+<article id="ci-studentt-logic">
+  <div hidden class="fragment current-visible" data-fragment-index="0"></div>
+  <div hidden class="fragment current-visible" data-fragment-index="1"></div>
+  <div hidden class="fragment current-visible" data-fragment-index="2"></div>
+</article>
+
+<div class="content">
+  <article id="ci-d3-studentt"></article>
+  <article class="equations">
+    <math-latex class="fragment" data-fragment-index="0" latex="\hat{\mu} = \frac{1}{N} \sum_{i=1}^N x_i"></math-latex>
+    <math-latex class="fragment" data-fragment-index="1" latex=" \hat{\sigma} = \sqrt{\frac{1}{N - 1} \sum_{i=1}^N \left(x_i - \hat{\mu}\right)^2}"></math-latex>
+    <div class="seperator"></div>
+    <span class="fragment opacity-parent" data-fragment-index="0">
+      <math-latex class="fragment opacity" data-fragment-index="1" latex="\hat{\mu} \sim \mathcal{N}\left(\mu, \frac{\sigma}{\sqrt{N}}\right)"></math-latex>
+    </span>
+    <math-latex class="fragment" data-fragment-index="1" latex="\hat{\mu} \sim \mathcal{t}\left(N - 1, \mu, \frac{\hat{\sigma}}{\sqrt{N}}\right)"></math-latex>
+  </article>
+</div>

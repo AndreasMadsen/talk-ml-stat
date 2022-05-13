@@ -1,0 +1,48 @@
+<style scoped>
+:scope svg path.line {
+  fill: none;
+  stroke: #cb4b16;
+  stroke-width: 2px;
+}
+
+:scope svg path.area {
+  fill: #839496;
+  opacity: 0.4;
+}
+
+:scope svg rect.bin {
+  stroke-width: 0;
+  fill: #839496;
+  opacity: 0.3;
+}
+
+:scope svg rect.bin.sourceA {
+  fill: #859900;
+}
+
+:scope svg rect.bin.sourceB {
+  fill: #dc322f;
+}
+
+:scope svg path.line.sourceA {
+  stroke: #859900;
+  opacity: 0.5;
+}
+
+:scope svg path.line.sourceB {
+  stroke: #dc322f;
+  opacity: 0.8;
+}
+
+#welch-significant-status {
+  font-size: 70%;
+}
+</style>
+
+<article id="welch-interval-logic">
+  <div hidden class="fragment current-visible" data-fragment-index="0"></div>
+  <div hidden class="fragment current-visible" data-fragment-index="1"></div>
+</article>
+
+<article id="welch-d3-interval"></article>
+<strong id="welch-significant-status"></strong>

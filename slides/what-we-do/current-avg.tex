@@ -1,0 +1,29 @@
+\documentclass{standalone}
+
+\usepackage{caption}
+\usepackage{multirow}
+\usepackage{booktabs}
+
+\begin{document}
+\minipage{0.6\textwidth}
+\centering
+\begin{tabular}{l c c c c}
+    \toprule
+    Dataset & \multicolumn{2}{c}{Performance [\%]} \\
+    \cmidrule(r){2-3}
+    & LSTM & RoBERTa \\
+    \midrule
+    Anemia & $88$ & $86$ \\
+    Diabetes & $81$ & $76$ \\
+    IMDB & $90$ & $95$ \\
+    SNLI & $78$ & $91$ \\
+    SST & $82$ & $94$ \\
+    bAbI-1 & $100$ & $100$ \\
+    bAbI-2 & $68$ & $100$ \\
+    bAbI-3 & $60$ & $81$ \\
+    \bottomrule
+\end{tabular}
+\captionof{table}{Average performance over 5 seeds.}
+\endminipage
+
+\end{document}
