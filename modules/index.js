@@ -5,7 +5,8 @@ const modules = {
   'jstat': require('jstat'),
   'summary': require('summary'),
   'ttest': require('ttest'),
-  './student_t_custom': require('./student_t_custom.js')
+  './student_t_custom': require('./student_t_custom.js'),
+  './manage_state': require('./manage_state.js')
 };
 
 window.require = function (name) {

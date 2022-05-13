@@ -1,6 +1,7 @@
 (function () {
-  const section = document.currentScript.parentNode;
   const distributions = window.require('distributions');
+  const StudenttCustom = window.require('./student_t_custom');
+  const manageState = window.require('./manage_state');
   const d3 = window.require('d3');
 
   var state = null;
@@ -214,62 +215,6 @@
     }
   }
 
-  class StudenttCustom {
-    constructor(n, mean, sd) {
-      this.base = distributions.Studentt(n);
-      this._mean = mean;
-      this._sd = sd;
-    }
-    mean() {
-      return this._mean;
-    }
-    median() {
-      return this._mean;
-    }
-    variance() {
-      return this._sd * this._sd;
-    }
-    inv(q) {
-      return this.base.inv(q) * this._sd + this._mean;
-    }
-    pdf(x) {
-      // https://en.wikipedia.org/wiki/Student%27s_t-distribution#Non-standardized_Student.27s_t-distribution
-      return this.base.pdf((x - this._mean) / this._sd) / this._sd;
-    }
-    cdf(x) {
-      return this.base.cdf((x - this._mean) / this._sd);
-    }
-  }
-
-  function getFragmentIndex() {
-    const activeFragments = section
-      .querySelectorAll('.fragment.current-visible.visible');
-    if (activeFragments.length > 0) {
-      const latest = activeFragments[activeFragments.length - 1];
-      return (+latest.dataset.fragmentIndex) + 1;
-    }
-    return 0;
-  }
-
-  Reveal.addEventListener('fragmentshown', function(event) {
-    if (event.fragment.parentNode.id !== 'ci-studentt-logic') return;
-    if (state) state.set(getFragmentIndex());
-  });
-
-  Reveal.addEventListener('fragmenthidden', function(event) {
-    if (event.fragment.parentNode.id !== 'ci-studentt-logic') return;
-    if (state) state.set(getFragmentIndex());
-  });
-
-  Reveal.addEventListener('slidechanged', function(event) {
-    if (event.previousSlide === section) {
-      if (state) state.pause();
-    } else if (event.currentSlide === section) {
-      if (state) state.resume();
-    }
-  });
-
   state = new State();
-  state.set(getFragmentIndex());
-  if (Reveal.getCurrentSlide() !== section) state.pause();
+  manageState(state, document.currentScript.parentNode, 'ci-studentt-logic');
 })();

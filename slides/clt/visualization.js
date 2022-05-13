@@ -1,7 +1,7 @@
 (function () {
-  const section = document.currentScript.parentNode;
   const d3 = window.require('d3');
   const jStat = window.require('jstat');
+  const manageState = window.require('./manage_state');
 
   var frame = null;
   var state = null;
@@ -215,38 +215,8 @@
     }
   }
 
-  function getFragmentIndex() {
-    const activeFragments = section
-      .querySelectorAll('.fragment.current-visible.visible');
-    if (activeFragments.length > 0) {
-      const latest = activeFragments[activeFragments.length - 1];
-      return (+latest.dataset.fragmentIndex) + 1;
-    }
-    return 0;
-  }
-
-  Reveal.addEventListener('fragmentshown', function(event) {
-    if (event.fragment.parentNode.id !== 'clt-visualization-logic') return;
-    if (state) state.set(getFragmentIndex());
-  });
-
-  Reveal.addEventListener('fragmenthidden', function(event) {
-    if (event.fragment.parentNode.id !== 'clt-visualization-logic') return;
-    if (state) state.set(getFragmentIndex());
-  });
-
-  Reveal.addEventListener('slidechanged', function(event) {
-    if (event.previousSlide === section) {
-      if (state) state.pause();
-    } else if (event.currentSlide === section) {
-      if (state) state.resume();
-    }
-  });
-
   sampler = new BetaSampler(8, 2);
   frame = new Frame(d3.select("#clt-d3-visualization"));
   state = new State(frame);
-  state.set(getFragmentIndex());
-  if (Reveal.getCurrentSlide() !== section) state.pause();
-
+  manageState(state, document.currentScript.parentNode, 'clt-visualization-logic');
 })();

@@ -1,6 +1,6 @@
 (function () {
-  const section = document.currentScript.parentNode;
-  const distributions = window.require('distributions');
+  const StudenttCustom = window.require('./student_t_custom');
+  const manageState = window.require('./manage_state')
   const summary = window.require('summary');
   const ttest = window.require('ttest');
   const d3 = window.require('d3');
@@ -199,14 +199,11 @@
       const curve = [];
       for (var xpx = xstart; xpx <= xend; xpx++) {
         var x = this.x.invert(xpx);
-        var y = distribution.pdf(x);
         curve.push({
           x: x,
-          y: y < 0.0001 ? 0 : y
+          y: distribution.pdf(x)
         });
       }
-
-      console.log(curve);
 
       return curve;
     };
@@ -233,64 +230,7 @@
     }
   }
 
-  class StudenttCustom {
-    constructor(n, mean, sd) {
-      this.base = distributions.Studentt(n);
-      this._mean = mean;
-      this._sd = sd;
-    }
-    mean() {
-      return this._mean;
-    }
-    median() {
-      return this._mean;
-    }
-    variance() {
-      return this._sd * this._sd;
-    }
-    inv(q) {
-      return this.base.inv(q) * this._sd + this._mean;
-    }
-    pdf(x) {
-      // https://en.wikipedia.org/wiki/Student%27s_t-distribution#Non-standardized_Student.27s_t-distribution
-      return this.base.pdf((x - this._mean) / this._sd) / this._sd;
-    }
-    cdf(x) {
-      return this.base.cdf((x - this._mean) / this._sd);
-    }
-  }
-
-  function getFragmentIndex() {
-    const activeFragments = section
-      .querySelectorAll('.fragment.current-visible.visible');
-    if (activeFragments.length > 0) {
-      const latest = activeFragments[activeFragments.length - 1];
-      return (+latest.dataset.fragmentIndex) + 1;
-    }
-    return 0;
-  }
-
-  Reveal.addEventListener('fragmentshown', function(event) {
-    if (event.fragment.parentNode.id !== 'welch-interval-logic') return;
-    if (state) state.set(getFragmentIndex());
-  });
-
-  Reveal.addEventListener('fragmenthidden', function(event) {
-    if (event.fragment.parentNode.id !== 'welch-interval-logic') return;
-    if (state) state.set(getFragmentIndex());
-  });
-
-  Reveal.addEventListener('slidechanged', function(event) {
-    if (event.previousSlide === section) {
-      if (state) state.pause();
-    } else if (event.currentSlide === section) {
-      if (state) state.resume();
-    }
-  });
-
   state = new State();
   state.observations(100);
-  state.set(getFragmentIndex());
-  if (Reveal.getCurrentSlide() !== section) state.pause();
-
+  manageState(state, document.currentScript.parentNode, 'welch-interval-logic');
 })();
