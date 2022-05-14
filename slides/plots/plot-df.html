@@ -1,0 +1,66 @@
+<style scoped>
+    :scope table {
+        font-size: 0.5em;
+    }
+</style>
+
+<pre><code code class="language-python" data-trim data-noescape>
+    df_plot = df.groupby(['dataset_pretty', 'model_type_pretty']) \
+                .apply(lambda partial_df: pd.Series(
+                    data=bootstrap_ci(partial_df['metric']),
+                    index=["mean", "lower", "upper"]
+                ))
+</code></pre>
+<table>
+    <thead>
+      <tr>
+        <th >Dataset</th>
+        <th >Model</th>
+        <th >Mean</th>
+        <th >Lower</th>
+        <th >Upper</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th rowspan="2">IMDB</th>
+        <th >BiLSTM-Attention</th>
+        <td >0.903004</td>
+        <td >0.895547</td>
+        <td >0.906823</td>
+      </tr>
+      <tr>
+        <th >RoBERTa</th>
+        <td >0.950251</td>
+        <td >0.949105</td>
+        <td >0.951030</td>
+      </tr>
+      <tr>
+        <th rowspan="2">SNLI</th>
+        <th >BiLSTM-Attention</th>
+        <td >0.779377</td>
+        <td >0.776323</td>
+        <td >0.781494</td>
+      </tr>
+      <tr>
+        <th >RoBERTa</th>
+        <td >0.915676</td>
+        <td >0.914577</td>
+        <td >0.916653</td>
+      </tr>
+      <tr>
+        <th rowspan="2">SST</th>
+        <th >BiLSTM-Attention</th>
+        <td >0.824451</td>
+        <td >0.814755</td>
+        <td >0.830591</td>
+      </tr>
+      <tr>
+        <th >RoBERTa</th>
+        <td >0.945240</td>
+        <td >0.941064</td>
+        <td >0.947040</td>
+      </tr>
+      <tr></tr>
+    </tbody>
+</table>
