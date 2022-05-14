@@ -10,11 +10,19 @@
   vertical-align: baseline;
 }
 
-.reveal pre {
+.reveal pre.dark {
   box-sizing: border-box;
   box-shadow: none;
   border: 1px solid #073642;
   border-left: 5px solid #073642;
+  font-size: 0.45em;
+}
+
+.reveal pre.light {
+  box-sizing: border-box;
+  box-shadow: none;
+  border: 1px solid #d0cabb;
+  border-left: 5px solid #d0cabb;
   font-size: 0.45em;
 }
 

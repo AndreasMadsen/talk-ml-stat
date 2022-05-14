@@ -4,7 +4,7 @@
     }
 </style>
 
-<pre><code code class="language-python" data-trim data-noescape>
+<pre class="light"><code code class="language-python" data-trim data-noescape>
     df_plot = df.groupby(['dataset_pretty', 'model_type_pretty']) \
                 .apply(lambda partial_df: pd.Series(
                     data=bootstrap_ci(partial_df['metric']),

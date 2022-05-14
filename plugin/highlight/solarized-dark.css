@@ -2,7 +2,7 @@
 Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
 */
 
-.hljs {
+.dark .hljs {
     display: block;
     overflow-x: auto;
     padding: 0.5em;
@@ -10,73 +10,73 @@ Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmai
     color: #839496;
   }
 
-  .hljs-comment,
-  .hljs-quote {
+  .dark .hljs-comment,
+  .dark .hljs-quote {
     color: #586e75;
   }
 
   /* Solarized Green */
-  .hljs-keyword,
-  .hljs-selector-tag,
-  .hljs-addition {
+  .dark .hljs-keyword,
+  .dark .hljs-selector-tag,
+  .dark .hljs-addition {
     color: #859900;
   }
 
   /* Solarized Cyan */
-  .hljs-number,
-  .hljs-string,
-  .hljs-meta .hljs-meta-string,
-  .hljs-literal,
-  .hljs-doctag,
-  .hljs-regexp {
+  .dark .hljs-number,
+  .dark .hljs-string,
+  .dark .hljs-meta .dark .hljs-meta-string,
+  .dark .hljs-literal,
+  .dark .hljs-doctag,
+  .dark .hljs-regexp {
     color: #2aa198;
   }
 
   /* Solarized Blue */
-  .hljs-title,
-  .hljs-section,
-  .hljs-name,
-  .hljs-selector-id,
-  .hljs-selector-class {
+  .dark .hljs-title,
+  .dark .hljs-section,
+  .dark .hljs-name,
+  .dark .hljs-selector-id,
+  .dark .hljs-selector-class {
     color: #268bd2;
   }
 
   /* Solarized Yellow */
-  .hljs-attribute,
-  .hljs-attr,
-  .hljs-variable,
-  .hljs-template-variable,
-  .hljs-class .hljs-title,
-  .hljs-type {
+  .dark .hljs-attribute,
+  .dark .hljs-attr,
+  .dark .hljs-variable,
+  .dark .hljs-template-variable,
+  .dark .hljs-class .dark .hljs-title,
+  .dark .hljs-type {
     color: #b58900;
   }
 
   /* Solarized Orange */
-  .hljs-symbol,
-  .hljs-bullet,
-  .hljs-subst,
-  .hljs-meta,
-  .hljs-meta .hljs-keyword,
-  .hljs-selector-attr,
-  .hljs-selector-pseudo,
-  .hljs-link {
+  .dark .hljs-symbol,
+  .dark .hljs-bullet,
+  .dark .hljs-subst,
+  .dark .hljs-meta,
+  .dark .hljs-meta .dark .hljs-keyword,
+  .dark .hljs-selector-attr,
+  .dark .hljs-selector-pseudo,
+  .dark .hljs-link {
     color: #cb4b16;
   }
 
   /* Solarized Red */
-  .hljs-built_in,
-  .hljs-deletion {
+  .dark .hljs-built_in,
+  .dark .hljs-deletion {
     color: #dc322f;
   }
 
-  .hljs-formula {
+  .dark .hljs-formula {
     background: #073642;
   }
 
-  .hljs-emphasis {
+  .dark .hljs-emphasis {
     font-style: italic;
   }
 
-  .hljs-strong {
+  .dark .hljs-strong {
     font-weight: bold;
   }
