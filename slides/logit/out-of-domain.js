@@ -7,7 +7,7 @@
     const Plot = window.require('./plot');
 
     const margin = {top: 10, right: 30, bottom: 30, left: 30};
-    const width = 600 - margin.left - margin.right;
+    const width = 700 - margin.left - margin.right;
     const height = 220 - margin.top - margin.bottom;
 
     // Sampled from `rbeta(100, 15, 2)`
@@ -70,7 +70,7 @@
     for (var i = 0; i < observations.length; i++) {
         normal.drawObservation(observations[i]);
     }
-    normal.drawDistribution(new Beta(15, 2));
+    // normal.drawDistribution(new Beta(15, 2));
 
     const studentt = new Plot(studenttContainer, {
         width: width,
