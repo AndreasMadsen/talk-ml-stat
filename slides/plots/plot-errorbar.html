@@ -1,8 +1,9 @@
 <pre class="light"><code code class="language-python" data-trim data-noescape>
-p = (p9.ggplot(df_plot, p9.aes(x='Dataset', color='Model', shape='Model'))
-    + p9.geom_point(p9.aes(y='mean'))
-    + p9.geom_errorbar(p9.aes(ymin='lower', ymax="upper"))
-    + p9.theme(legend_box = "vertical", legend_position="bottom")
-)
+import plotnine as p9
+
+p = p9.ggplot(df_plot, p9.aes(x='Dataset', color='Model', shape='Model')) \
+  + p9.geom_point(p9.aes(y='mean')) \
+  + p9.geom_errorbar(p9.aes(ymin='lower', ymax="upper")) \
+  + p9.theme(legend_box = "vertical", legend_position="bottom")
 </code></pre>
 <img style="padding: 0.1em;" width="600" src="./slides/plots/plot-errorbar.svg">

@@ -5,10 +5,10 @@
 </style>
 
 <pre class="light"><code code class="language-python" data-trim data-noescape>
-    df_plot = df.groupby(['dataset_pretty', 'model_type_pretty']) \
+    df_plot = df.groupby(['Dataset', 'Model']) \
                 .apply(lambda partial_df: pd.Series(
-                    data=bootstrap_ci(partial_df['metric']),
-                    index=["mean", "lower", "upper"]
+                    data=bootstrap_ci(partial_df['Performance']),
+                    index=["Mean", "Lower", "Upper"]
                 ))
 </code></pre>
 <table>
