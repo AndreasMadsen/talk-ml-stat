@@ -1,7 +1,7 @@
 <pre class="light"><code code class="language-python" data-trim data-noescape>
 p = p9.ggplot(df_plot, p9.aes(x='Hyperparameter')) \
-  + p9.geom_line(p9.aes(y='mean', color='Model')) \
-  + p9.geom_ribbon(p9.aes(ymin='lower', ymax="upper", fill='Model'),
+  + p9.geom_line(p9.aes(y='Mean', color='Model')) \
+  + p9.geom_ribbon(p9.aes(ymin='Lower', ymax="Upper", fill='Model'),
                    alpha=0.35) \
   + p9.facet_grid(' ~ Dataset') \
   + p9.theme(legend_box = "vertical", legend_position="bottom")
