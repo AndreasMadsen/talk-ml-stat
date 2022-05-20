@@ -34,7 +34,6 @@
   const margin = {top: 10, right: 30, bottom: 30, left: 30};
   const width = 700 - margin.left - margin.right;
   const height = 220 - margin.top - margin.bottom;
-  const bins = 200;
 
   class State {
     constructor() {
@@ -59,7 +58,8 @@
         width: width,
         height: height,
         xdomain: xdomain,
-        ydomain: ydomain
+        ydomain: ydomain,
+        yticks: false
       });
       this.mean = new Plot(meanContainer, {
         width: width,

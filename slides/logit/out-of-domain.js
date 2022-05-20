@@ -65,7 +65,8 @@
         width: width,
         height: height,
         xdomain: [0, 1.2],
-        ydomain: [0, 8]
+        ydomain: [0, 8],
+        yticks: false
     });
     for (var i = 0; i < observations.length; i++) {
         normal.drawObservation(observations[i]);
@@ -76,7 +77,8 @@
         width: width,
         height: height,
         xdomain: [0, 1.2],
-        ydomain: [0, 8]
+        ydomain: [0, 8],
+        yticks: false
     });
 
     studentt.drawObservation(stat.mean());

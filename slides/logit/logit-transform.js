@@ -84,7 +84,8 @@
         width: width,
         height: height,
         xdomain: [0, 1.2],
-        ydomain: [0, 8]
+        ydomain: [0, 8],
+        yticks: false
     });
     for (var i = 0; i < observations.length; i++) {
         normal.drawObservation(observations[i]);
@@ -95,7 +96,8 @@
         width: width,
         height: height,
         xdomain: [-5, 5],
-        ydomain: [0, 1]
+        ydomain: [0, 1],
+        yticks: false
     });
 
     for (var i = 0; i < observations.length; i++) {
@@ -111,7 +113,8 @@
         width: width,
         height: height,
         xdomain: [0, 1.2],
-        ydomain: [0, 1]
+        ydomain: [0, 1],
+        yticks: false
     });
     studentt.annotationLine(expit(logitStat.mean()), 'Mean');
     studentt.drawDistribution(
